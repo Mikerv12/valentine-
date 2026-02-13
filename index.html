@@ -64,13 +64,6 @@ button {
   0% { transform: translateY(100vh); opacity: 1; }
   100% { transform: translateY(-10vh); opacity: 0; }
 }
-
-iframe {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border: 0;
-}
 </style>
 </head>
 
@@ -83,28 +76,12 @@ iframe {
 <button id="yesBtn" onclick="sayYes()">YES 💖</button>
 <button id="noBtn" onmouseover="moveButton()">No 🙄</button>
 
-<!-- Thinking Out Loud -->
-<iframe 
-src="https://www.youtube.com/embed/lp-EO5I60KA?autoplay=1&loop=1&playlist=lp-EO5I60KA"
-allow="autoplay">
-</iframe>
+<audio id="loveSong">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+</audio>
 
 <script>
-
-function sayYes() {
-  document.body.innerHTML = `
-    <h1 style="margin-top:20%; font-size:50px;">
-      I knew you'd say YES 😌💍
-    </h1>
-    <p style="font-size:25px;">
-      And darling I will be loving you… till we’re 70 ❤️<br>
-      Maybe my heart could still fall as hard at 23 🥹
-    </p>
-    <p style="font-size:20px;">Forever yours, Mike 💕</p>
-  `;
-  createConfetti();
-}
-
+// Moving NO button
 function moveButton() {
   let button = document.getElementById("noBtn");
   let x = Math.random() * (window.innerWidth - 100);
@@ -113,6 +90,7 @@ function moveButton() {
   button.style.top = y + "px";
 }
 
+// Floating hearts animation
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
@@ -121,13 +99,12 @@ function createHeart() {
   heart.style.fontSize = Math.random() * 20 + 15 + "px";
   document.body.appendChild(heart);
 
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
+  setTimeout(() => heart.remove(), 6000);
 }
 
 setInterval(createHeart, 300);
 
+// Confetti animation
 function createConfetti() {
   for (let i = 0; i < 120; i++) {
     let confetti = document.createElement("div");
@@ -143,6 +120,7 @@ function createConfetti() {
   }
 }
 
+// Confetti falling keyframe
 document.head.insertAdjacentHTML("beforeend", `
 <style>
 @keyframes fall {
@@ -151,6 +129,24 @@ document.head.insertAdjacentHTML("beforeend", `
 </style>
 `);
 
+// YES button action
+function sayYes() {
+  // Play song reliably on click
+  let song = document.getElementById("loveSong");
+  song.play();
+
+  document.body.innerHTML = `
+    <h1 style="margin-top:20%; font-size:50px;">
+      YAY! 💕
+    </h1>
+    <p style="font-size:25px;">
+      And darling I will be loving you… till we’re 70 ❤️<br>
+      Maybe my heart could still fall as hard at 23 🥹
+    </p>
+    <p style="font-size:20px;">Forever yours, Mike 💕</p>
+  `;
+  createConfetti();
+}
 </script>
 
 </body>
